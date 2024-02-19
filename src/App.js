@@ -46,7 +46,7 @@ function App() {
                   <ol style={{padding:'-5px'}}>
                     {bookName.map((name, index) => (
                         <li className='note-title' key={index}>
-                          <Card name={name} rating={5} aaa={aaa}/>
+                            <Card name={name} rating={5} aaa={aaa}/>
                         </li>
                       ))}
                   </ol>           
