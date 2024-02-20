@@ -79,6 +79,7 @@
 .note-title {
   font-size: 18px;
   font-weight: bold;
+  margin:10px;
   margin-bottom: 10px; /* 標題與創建時間之間的距離 */
 }
 

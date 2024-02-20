@@ -38,15 +38,15 @@ function App() {
   return (
     <div>
         <header className="app-header">
-          <h1>Book Notes APP</h1>
+          <h2>Book Notes</h2>
         </header>
         <main style ={{backgroundColor:'#F5F5F5', display:'flex', flexDirection:'column', alignItems:'center', padding:'5px' }}>
-            <div className='note-card'>
+            <div >
               <h2>My Book List ({count})</h2>                  
                   <ol style={{padding:'-5px'}}>
                     {bookName.map((name, index) => (
                         <li className='note-title' key={index}>
-                            <Card name={name} rating={5} aaa={aaa}/>
+                            <Card name={name} rating={5} aaa={aaa} note={''}/>
                         </li>
                       ))}
                   </ol>           
@@ -55,7 +55,7 @@ function App() {
         <div style={{display:'flex', justifyContent:'center'}}>
             <input type="text" value={newBookname} 
                    onChange={e => setNewbookname(e.target.value)}
-                   placeholder='輸入書名後點擊 + 來新增'
+                   placeholder='輸入書名後點擊 + 新增'
                    style={{padding:'5px'}} />
             <button style={{
                 width:'30px', 
