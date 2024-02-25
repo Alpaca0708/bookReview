@@ -3,86 +3,62 @@ import './App.css';
 import {useState} from 'react'
 import Card from './components/Card'
 
-function App() {
-  const NoteCard = ({ title, timestamp }) => (
-    <div className="note-card">
-      <div className="note-title">{title}</div>
-      <div className="note-timestamp">{timestamp}</div>
-    </div>
-  );
-  
-  const NotesList = ({ notes }) => (
-    <div>
-      {notes.map(note => (
-        <NoteCard key={note.id} title={note.title} timestamp={note.timestamp} />
-      ))}
-    </div>
-  );
-
-  const [bookName, setBookName] = useState([])
-  const [newBookname, setNewbookname] = useState('')
-  const addBook = () => {
-    if (newBookname) {
-      setBookName([...bookName, newBookname]);
-      setNewbookname('');
-    }
-  };
-
-  const [count, setCount] = useState(0)
-
-  const aaa = (number) =>{
-    setCount(count+number)
-  }
-  
+function App() {  
 
   return (
-    <div>
-        <header className="app-header">
-          <h2>Book Notes</h2>
-        </header>
-        <main style ={{backgroundColor:'#F5F5F5', display:'flex', flexDirection:'column', alignItems:'center', padding:'5px' }}>
-            <div >
-              <h2>My Book List ({count})</h2>                  
-                  <ol style={{padding:'-5px'}}>
-                    {bookName.map((name, index) => (
-                        <li className='note-title' key={index}>
-                            <Card name={name} rating={5} aaa={aaa} note={''}/>
-                        </li>
-                      ))}
-                  </ol>           
+    <div style={{display:'flex'}}>
+        <nav style={{display:'flex',flexDirection:'column', color:'#727272'}}>
+            <h1>
+              Ventur
+            </h1>
+            <hr style={{borderColor:'#727272'}}/>
+            <p>
+              Dashboard
+            </p>
+            <p>
+              Notes
+            </p>
+            <p>
+              Tasks
+            </p>
+            <p>
+              Calendar
+            </p>
+            <p>
+              Database
+            </p>
+            <p>
+              Analytics
+            </p>
+            <hr/>
+            <p>
+              Setting
+            </p>
+        </nav>
+        <main>
+            <div style={{display:'flex', }}>
+                <input placeholder='search'></input>
+                <p>Help Center</p>
             </div>
+            <div style={{display:'flex', justifyContent:'space-between'}}>
+                <h3>
+                  Notes
+                </h3>
+                <p>
+                  Sort By
+                </p>
+                <p>
+                  Filter
+                </p>
+                <p>
+                  Add Notes
+                </p>
+            </div>
+            <div></div>
         </main>
-        <div style={{display:'flex', justifyContent:'center'}}>
-            <input type="text" value={newBookname} 
-                   onChange={e => setNewbookname(e.target.value)}
-                   placeholder='輸入書名後點擊 + 新增'
-                   style={{padding:'5px'}} />
-            <button style={{
-                width:'30px', 
-                height:'30px', 
-                borderRadius:'50%', 
-                border:'none', 
-                backgroundColor: '#ADD8E6', 
-                color:'white', 
-                cursor: 'pointer'}} 
-                onClick={addBook}>+</button>
-        </div>
-      
-
 
     </div>
   );
 }
 
 export default App;
-
-
- {/* {notes.length > 0 ? (
-            <ul className="notes-list">
-              {notes.map(note => (
-                <li key={note.id}>{note.title}</li>
-              ))}
-            </ul>
-          ) : (
-            <p className="placeholder-text">目前沒有筆記，點擊下方的 '+' 按鈕來新增你的第一條讀書筆記！</p>
-          )} */}
