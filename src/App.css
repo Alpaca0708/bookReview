@@ -38,12 +38,16 @@
 }
 
 navStyle{
-  width:216px; 
-  height:36px; 
-  display:flex; 
+  display:flex;   
+  justify-content:space-between;
   align-items:center;
-  padding:30px;
-  background-color: bisque;
+  
+}
+
+.navStyle:hover {
+  background-color: #F2F2F2;
+  color: #000000;
+  border-radius: 7px;
 }
 
 
