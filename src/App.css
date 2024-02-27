@@ -37,58 +37,13 @@
   }
 }
 
-[class*= "col-" ]{
-  width:100%
+navStyle{
+  width:216px; 
+  height:36px; 
+  display:flex; 
+  align-items:center;
+  padding:30px;
+  background-color: bisque;
 }
-
-@media only screen and (min-width: 576px) { 
-  col-s-1 {width: 8.33%;}
-  col-s-2 {width: 16.66%;}
-  col-s-3 {width: 25%;}
-  col-s-4 {width: 33.33%;}
-  col-s-5 {width: 41.66%;}
- }
- .card {
-  background-color: white;
-  border-radius: 25px;
-  padding: 15px;
-
- }
-
- .fab {
-  background-color: #ADD8E6; /* 背景顏色 */
-  width: 40px;
-  height: 40px;
-  color: white; /* 文字顏色 */
-  border: none; /* 無邊框 */
-  border-radius: 50%; /* 圓形邊框 */
-  padding: 10px; /* 內部填充 */
-  font-size: 24px; /* 字體大小 */
-  cursor: pointer; /* 鼠標懸停時的指標樣式 */ 
-   
-}
-
-.note-card {
-  background-color: white;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  margin: 10px;
-  padding: 20px;
-  border-radius: 5px; /* 輕微圓角 */
-}
-
-.note-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin:10px;
-  margin-bottom: 10px; /* 標題與創建時間之間的距離 */
-}
-
-.note-timestamp {
-  color: #777;
-  font-size: 14px;
-}
-
- 
- 
 
 
