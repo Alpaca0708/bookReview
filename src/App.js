@@ -10,6 +10,7 @@ import NotesCard from './components/NotesCard';
 function App() {  
 
   const [pop, setPop] = useState(false)
+  const [popUpIndex, setPopupIndex] = useState(-1)
   const addNote = () => {
       setTitle('')
       setBook_movie('')
@@ -52,18 +53,38 @@ function App() {
   // },[])
 
   const handleAddnote = () => {
-      const newNote = {
-        title:title,
-        book_movie:book_movie,
-        context:context
+    const newNote = {
+      title:title,
+      book_movie:book_movie,
+      context:context
+    } 
+      if(popUpIndex == -1){
+          setCardInformation([...cardInformation, newNote]) 
+          setTitle('')
+          setBook_movie('')
+          setContext('')
+          setPop(!pop)
       } 
+      else  {
+        let newCardInformation = [...cardInformation]
+        newCardInformation[popUpIndex] = newNote
+          setCardInformation(newCardInformation) 
+          setTitle('')
+          setBook_movie('')
+          setContext('')
+          setPop(!pop)
+      }     
+    }
+
+
+      
       // console.log(Object.keys(newNote)) 
-      setCardInformation([...cardInformation, newNote]) 
-      setTitle('')
-      setBook_movie('')
-      setContext('')
-      setPop(!pop)
-  } 
+  //     setCardInformation([...cardInformation, newNote]) 
+  //     setTitle('')
+  //     setBook_movie('')
+  //     setContext('')
+  //     setPop(!pop)
+  // } 
   
   const changeTitle =(e) =>{
     setTitle(e.target.value)   
@@ -73,6 +94,14 @@ function App() {
   }
   const changeContext =(e) =>{
     setContext(e.target.value)   
+  }
+
+  const popUpAction = (title,book_movie,context,cardIndex) => {
+    setPop(true)
+    setTitle(title)
+    setBook_movie(book_movie)
+    setContext(context)
+    setPopupIndex(cardIndex)
   }
  
 
@@ -190,38 +219,38 @@ function App() {
                     </button>
                 </div>
             </div>
-            <div style={{  padding:'20px'}}>
-                <div style={{display:'flex', justifyContent:'space-around', flexWrap:'wrap'}}>
-                 
+            <div style={{padding:'20px'}}>
+                <div style={{display:'flex', justifyContent:'space-around', flexWrap:'wrap'}}>                 
                   {cardInformation.map((cardIn,index)=>{
-                    return(<NotesCard index={index} title={cardIn.title} book_movie={cardIn.book_movie} context={cardIn.context}/>)
+                    return(<NotesCard index={index} title={cardIn.title} book_movie={cardIn.book_movie} context={cardIn.context} popUpAction={popUpAction}/>)
                   })}
                 </div>
             </div>
             {pop && (
-                <div style={{display:'flex', flexDirection:'column', width:'70%'}}>
-                  <div style={{borderBottom:'1px solid #E4E4E4'}}>
-                      <h3 >Tasks</h3>
-                      
-                  </div>
-                  
-                  <div style={{display:'flex', flexDirection:'column'}}>
-                    <input type='text' onChange={changeTitle}  ></input>
-                    <input onChange={changeBook_movie}></input>
-                    <textarea rows="5" onChange={changeContext}></textarea> 
-                      
-                      
-                  </div>
-                  <div>
-                       
-                  </div>
-                  <button style={{border:'1px solid black', backgroundColor:'white', height:'30px'}}
-                          onClick={handleAddnote}>
-                      <PlusOutlined style={{marginRight:'10px'}}/>Add Note
-                    </button>
-                  <button onClick={addNote}>
-                    Cancel
-                    </button>
+                <div style={{position:'fixed', top:'80px', right:'170px', backgroundColor:'white',  display:'flex', flexDirection:'column', width:'60%', border:'1px solid #AFAFAF', borderRadius:'9px', padding:'30px'}}>
+                    {/* <div > */}
+                        <h3 >Book/Movie notes</h3>
+                        <hr/>    
+                    {/* </div>                   */}
+                    <div style={{display:'flex', flexDirection:'column'}}>
+                        <input placeholder='title' value={title} type='text' onChange={changeTitle} style={{ marginBottom:'10px', border:'1px solid #E4E4E4', borderRadius:'7px', height:'25px'}}  ></input>
+                        <input placeholder='book or movie' value={book_movie} type='text' onChange={changeBook_movie} style={{marginBottom:'10px', border:'1px solid #E4E4E4', borderRadius:'7px', height:'25px'}}></input>
+                        <textarea rows='20' value={context} onChange={changeContext} style={{padding:'10px', border:'1px solid #E4E4E4', borderRadius:'5px', marginBottom:'10px'}}></textarea>                       
+                    </div>       
+                    {popUpIndex==-1?           
+                      <button style={{border:'1px solid black', backgroundColor:'white', height:'30px', marginBottom:'10px', borderRadius:'5px'}}
+                              onClick={handleAddnote}>
+                          <PlusOutlined style={{marginRight:'10px'}}/>Add Note
+                      </button>
+                      :
+                      <button style={{border:'1px solid black', backgroundColor:'white', height:'30px', marginBottom:'10px', borderRadius:'5px'}}
+                            onClick={handleAddnote}>
+                        <PlusOutlined style={{marginRight:'10px'}}/>Revise Note {popUpIndex}
+                      </button>
+                    }
+                    <button onClick={addNote} style={{border:'1px solid black', backgroundColor:'red', height:'30px', color:'white', borderRadius:'5px', border:'none'}}>
+                      Cancel
+                      </button>
                 </div>)}
 
 

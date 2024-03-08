@@ -3,33 +3,9 @@ import { useState, useEffect } from 'react';
 import { EditOutlined } from '@ant-design/icons';
 
 
+
 function NotesCard (props){
-    const [title, setTitle] = useState('')
-    const [book, setBook] = useState('')
-    const [context, setContext] = useState('')
-    const [bookNote, setBookNote] = useState([])
-
-    const titling = (e) => {
-        setTitle(e.target.value)
-    }    
-    const booking = (e) => {
-        setBook(e.target.value)
-    }
-    const note = (e) => {
-        setContext(e.target.value)
-    }            
-
-    const comfirm = () =>{
-        const newNote = {
-            title:title,
-            book:book,
-            context:context
-        }        
-        setBookNote = () => {Object.keys(newNote)};
-        setTitle('')
-        setBook('')
-        setContext('')       
-    }
+   
 
 
     return(
@@ -48,29 +24,30 @@ function NotesCard (props){
                         <p>{note.context}</p>
                     </div>
                     ))} */}
+                    
                     <h3>{props.title}</h3>
-                    <p style={{fontSize:'12px',color:'gray'}}>{props.book_movie}</p>
-                    <p>{props.context}</p>
+                    <p>{props.book_movie}</p>
+                    <p style={{fontSize:'14px',color:'gray', textOverflow: 'ellipsis', overflow: 'hidden', WebkitLineClamp:1,  whiteSpace: 'nowrap'}}>
+                        {props.context}
+                    </p>
                     
 
                 </div>
                 <div style={{padding:'10px', borderTop:'1px solid #AFAFAF', display:'flex',justifyContent:'space-between', alignItems:'center', }}>
-                    <button onClick={()=>alert(props.index)} style={{backgroundColor:'black', color:'white',width:'62px', height:'27px', borderRadius:'5px', marginLeft:'10px'}}>
-                        <EditOutlined style={{ }}/>Edit
+                    <button 
+                    // onClick={()=>alert( props.title)} 
+                    //父傳子一個function,再用這個function 讓子傳父:改變父親的值
+                    //popUpAction()內為4個參數
+                    onClick={()=>props.popUpAction(props.title,props.book_movie,props.context,props.index)}
+                    
+                    style={{backgroundColor:'black', color:'white',width:'62px', height:'27px', borderRadius:'5px', marginLeft:'10px'}}>
+                        <EditOutlined />Edit
                     </button>
                     <p type='time' style={{marginRight:'10px'}}>
                         
                     </p>
                 </div>
             </div>
-
-
-        {/* <div style={{display:'flex', flexDirection:'column'}}>
-            <input type='text' value={title} placeholder='Title' onChange={titling}></input>             
-            <input type='text' value={book} placeholder='book/movie' onChange={booking}></input>
-            <input type='text' value={context} placeholder='心得' onChange={note}></input>
-            <button onClick={comfirm}>確定</button>
-        </div> */}
 
     </div>
     )
