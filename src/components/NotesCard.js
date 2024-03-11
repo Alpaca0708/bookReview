@@ -43,9 +43,15 @@ function NotesCard (props){
                     style={{backgroundColor:'black', color:'white',width:'62px', height:'27px', borderRadius:'5px', marginLeft:'10px'}}>
                         <EditOutlined />Edit
                     </button>
-                    <p type='time' style={{marginRight:'10px'}}>
+                    <button style={{backgroundColor:'red', color:'white',width:'62px', height:'27px', borderRadius:'5px', marginLeft:'10px', border:'none'}}
+                    // onClick={() =>props.handleRemove(props.index) }>
+                    onClick={() => props.handleRemove( props.index)}>
+                            
+                        Delete
+                    </button>
+                    
                         
-                    </p>
+                    
                 </div>
             </div>
 

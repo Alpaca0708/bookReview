@@ -66,7 +66,7 @@ function App() {
           setContext('')
           setPop(!pop)
       } 
-      else  {
+      else if (popUpIndex > -1) {
         let newCardInformation = [...cardInformation]
         newCardInformation[popUpIndex] = newNote
           setCardInformation(newCardInformation) 
@@ -83,6 +83,11 @@ function App() {
       setFilterData(newData);
     }, [search]);
     
+    // const deleteCard = cardInformation.splice(0,1)
+
+    // start:陣列索引值
+    // deleteCount:刪除陣列裡的物件數量
+    // var removed = myFish.splice(3, 1);
     
     // const searchItem = (searchValue) => {
     //   setSearch(searchValue)
@@ -119,6 +124,22 @@ function App() {
     setContext(context)
     setPopupIndex(cardIndex)
   }
+
+  const handleRemove = (i) => {
+    const newCard = cardInformation.filter ((card, index) => index !== i);
+    setCardInformation (newCard)
+    console.log(cardInformation)
+  }
+
+//   const [people, setPeople] = useState(data);
+
+// const handleRemove = (id) => {
+//    const newPeople = people.filter((person) => person.id !== id);
+
+//    setPeople( newPeople);
+//  };
+
+// <button onClick={() => handleRemove(id)}>Remove</button>
  
 
   return (
@@ -238,7 +259,7 @@ function App() {
             <div style={{padding:'20px'}}>
                 <div style={{display:'flex', justifyContent:'space-around', flexWrap:'wrap'}}>                 
                   {cardInformation.map((cardIn,index)=>{
-                    return(<NotesCard index={index} title={cardIn.title} book_movie={cardIn.book_movie} context={cardIn.context} popUpAction={popUpAction}/>)
+                    return(<NotesCard index={index} title={cardIn.title} book_movie={cardIn.book_movie} context={cardIn.context} popUpAction={popUpAction} handleRemove={handleRemove}/>)
                   })}
                   {/* {filterData.map((cardIn, index) => (
                     return(<NotesCard key={index} index={index} title={cardIn.title} book_movie={cardIn.book_movie} context={cardIn.context} popUpAction={popUpAction} />)
