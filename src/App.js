@@ -237,12 +237,12 @@ function App() {
             </div>
             <div style={{padding:'20px'}}>
                 <div style={{display:'flex', justifyContent:'space-around', flexWrap:'wrap'}}>                 
-                  {/* {cardInformation.map((cardIn,index)=>{
+                  {cardInformation.map((cardIn,index)=>{
                     return(<NotesCard index={index} title={cardIn.title} book_movie={cardIn.book_movie} context={cardIn.context} popUpAction={popUpAction}/>)
-                  })} */}
-                  {filterData.map((cardIn, index) => (
-                    <NotesCard key={index} index={index} title={cardIn.title} book_movie={cardIn.book_movie} context={cardIn.context} popUpAction={popUpAction} />
-                  ))}
+                  })}
+                  {/* {filterData.map((cardIn, index) => (
+                    return(<NotesCard key={index} index={index} title={cardIn.title} book_movie={cardIn.book_movie} context={cardIn.context} popUpAction={popUpAction} />)
+                  ))} */}
                 </div>
             </div>
             {pop && (
