@@ -1,6 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
-import {useState,useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import { DashboardOutlined, CalendarOutlined, BookOutlined, DownOutlined, FileTextOutlined, LineChartOutlined, SettingOutlined, QuestionCircleOutlined,FilterOutlined, PlusOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import user from './user.jpg';
 import NotesCard from './components/NotesCard';
@@ -23,14 +22,14 @@ function App() {
   const [context, setContext] = useState('')
   const [cardInformation,setCardInformation] = useState([
     {
-      title:'One Breath Away',
-      book_movie:'One Breath Away',
-      context: 'In this journey of discovery, Green uses emotional appeal to absorb readers into the bittersweet lives of Hazel and Gus. Mentioning Hazel’s birthday celebration, the author indicates the importance of treasuring the moment: “Hazel! It’s your thirty-third half birthday!”, her mother exclaims happily, establishing an irony when considering the tragic reason for such a merry celebration (39). In desperation, not knowing when her last day would arrive, Hazel’s family could only cherish their moments together. Nonetheless, Hazel also starts to worry about her family: “I worry… that you’ll sit around here all day with no me… and want to off yourselves (297). When facing the ones dying, we fret over them, about their circumstances, their emotional wellbeing, and their health. However, those with the illnesses usually worry about our reactions regarding their conditions even more than their own wellbeing. For Gus, Green incorporates how Gus sees himself as the “pitiful boy who desperately wanted not to be pitiful... poisoned by an infected G-tube that kept him alive, but not alive enough”, depicting his concerns around his physical limitations, a side concealed by his humor (245). Creating multiple dimensions to his characters, Green portrays the lives of two young teenagers beyond their illnesses, exploring life with their daily hardships.'
+      title:'善用賽局理論,人生不出局',
+      book_movie:'賽局理論',
+      context: '賽局理論告訴我們，要將問題先想成一個賽局，並且分析兩人以上的玩家，他會如何決策和行動？並且找出一個能讓玩家獲得雙贏的結果，這邊要注意的是，賽局理論注重「雙贏」而非「擊敗對手」。或許有人會認為，比賽不是就是要打敗對手嗎？但是俗話說：「傷敵一千，自損八百」，你贏對方的同時，自己勢必也會有某種程度上的損失，你並沒有因為贏了對手而獲得最大利益。孫子說過：「故善用兵者，屈人之兵而非戰也，拔人之城而非攻也，毀人之國而非久也，必以全爭於天下，故兵不頓而利可全，此謀攻之法也」孫大爺都這麼說了，我們還要為了贏過對手而爭得死去活來嗎？賽局理論得定義是：「分析複數以上主體，彼此利害關係的方法」，而我們學習賽局理論，有三個目的：1.釐清賽局(問題)的整體架構 → 提升分析問題的能力2.預測未來可能發生的事 → 提升預測能力3.選擇最合適的結果 → 提升問題解決的能力'
     },
     {
-      title:'Answers',
-      book_movie:'Answers',
-      context: 'Hazel and Augustus do not allow their illness to become their defining characteristics. Although they start on different paths, both paths eventually merge and become one in which they walk side by side. As Augustus writes, You dont get to choose if... I like my choices,” there are no more regrets between them. Although lives are lost and tears are shed, there is no doubt that they discover the answers that they have been looking for.'
+      title:'用30分鐘讀完一本書',
+      book_movie:'雪球速讀法',
+      context: '所謂的「高速大量循環」，背後的精神是「讀得快，更容易理解內容」和「第二次讀的時候，會比第一次讀得更快」。作者以許多案例說明，讀得慢，不如讀得快、讀得多次，反覆且快速的來回閱讀，被證明是更能掌握整本書精華的方法。'
     },
     {
       title:'Behind a Perfect World',
@@ -51,6 +50,11 @@ function App() {
   // //   // setCardInformation(tempCardInforation)
 
   // },[])
+  // useEffect(()=>{
+  //   let ddd = localStorage.getItem('myData')
+  //   console.log(ddd)
+  //   setCardInformation(JSON.parse(ddd))
+  // },[])
 
   const handleAddnote = () => {
     const newNote = {
@@ -59,35 +63,56 @@ function App() {
       context:context
     } 
       if(popUpIndex == -1){
-          setCardInformation([...cardInformation, newNote]) 
-                                                 // newNote為新增物件到array裡, 想當於JS的.push
+          setCardInformation([...cardInformation, newNote])           
+                                                 // newNote為新增物件到array裡, 相當於JS的.push
           setTitle('')
           setBook_movie('')
           setContext('')
+          localStorage.setItem('myData', JSON.stringify([...cardInformation, newNote]));
           setPop(!pop)
-      } 
-      else if (popUpIndex > -1) {
+          console.log(popUpIndex)
+      }   else if (popUpIndex > -1) {
         let newCardInformation = [...cardInformation]
         newCardInformation[popUpIndex] = newNote
-          setCardInformation(newCardInformation) 
-          setTitle('')
-          setBook_movie('')
-          setContext('')
-          setPop(!pop)
+        setCardInformation(newCardInformation) 
+        setTitle('')
+        setBook_movie('')
+        setContext('')
+        localStorage.setItem('myData', JSON.stringify(newCardInformation));
+        setPop(!pop)
+        console.log(popUpIndex)
+        setPopupIndex(-1)
       }     
     }
-    const [search, setSearch] = useState('')
-    const [filterData, setFilterData] = useState([]);
-    useEffect(() => {
-      const newData = cardInformation.filter((x) => x.title.includes(search));
-      setFilterData(newData);
-    }, [search]);
-    
-    // const deleteCard = cardInformation.splice(0,1)
 
-    // start:陣列索引值
-    // deleteCount:刪除陣列裡的物件數量
-    // var removed = myFish.splice(3, 1);
+    // const handleAddnote = () => {
+    //   const newNote = {
+    //     title: title,
+    //     book_movie: book_movie,
+    //     context: context
+    //   };
+  
+    //   let updatedCardInformation;
+    //   if (popUpIndex === -1) {
+    //     updatedCardInformation = [...cardInformation, newNote];
+    //   } else {
+    //     updatedCardInformation = [...cardInformation];
+    //     updatedCardInformation[popUpIndex] = newNote;
+    //   }
+  
+    //   // 更新狀態並將資料儲存到 localStorage
+    //   setCardInformation(updatedCardInformation);
+    //   localStorage.setItem('myData', JSON.stringify(updatedCardInformation));
+  
+    //   // 清空表單和彈出視窗
+    //   setTitle('');
+    //   setBook_movie('');
+    //   setContext('');
+    //   setPop(!pop);
+    // };
+  
+    
+    
     
     // const searchItem = (searchValue) => {
     //   setSearch(searchValue)
@@ -96,13 +121,10 @@ function App() {
     //     })
     // }
 
-    // const filterData = cardInformation.filter((x) => x.title.includes(search))
-    // console.log(filterData)
-    
+    // const filterData = cardInformation.filter((x) => x.includes(search))
+    // console.log(filterData)    
     
     //  setCardInformation([cardInformation.filter((x) => x.title.includes(search))]) 
-
-    
 
     // console.log(search)
 
@@ -129,17 +151,19 @@ function App() {
     const newCard = cardInformation.filter ((card, index) => index !== i);
     setCardInformation (newCard)
     console.log(cardInformation)
+    localStorage.setItem('myData', JSON.stringify(newCard));
   }
+  const [search, setSearch] = useState('')
+  const [filterData, setFilterData] = useState(cardInformation);
 
-//   const [people, setPeople] = useState(data);
-
-// const handleRemove = (id) => {
-//    const newPeople = people.filter((person) => person.id !== id);
-
-//    setPeople( newPeople);
-//  };
-
-// <button onClick={() => handleRemove(id)}>Remove</button>
+  const handleInputChange = (e) => { 
+    const searchTerm = e.target.value;
+    setSearch(searchTerm)
+    const filteredItems = cardInformation.filter((info) =>
+    info.context.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilterData(filteredItems);
+  }
  
 
   return (
@@ -161,8 +185,7 @@ function App() {
                                   <p>
                                     Dashboard
                                   </p>
-                              </div>                    
-                                                        
+                              </div>                                                                            
                         </div>
                         <div  className='navStyle' >
                             <div style={{display:'flex', alignItems:'center'}}>                
@@ -215,7 +238,7 @@ function App() {
         </div>
         <main style={{width:'100%'}}>
             <div style={{display:'flex', borderBottom:'solid 1px #E4E4E4', justifyContent:'space-between', padding:'10px'}}>
-                <input placeholder='  search' onChange={(e) =>setSearch(e.target.value)} value={search} style={{height:'41px', width:'360px',border: '1px solid #E4E4E4', borderRadius:'5px', }}></input>
+                <input placeholder='  search' onChange={handleInputChange} value={search} style={{height:'41px', width:'360px',border: '1px solid #E4E4E4', borderRadius:'5px', }}></input>
                 <div style={{display:'flex', alignItems:'center'}}>
                     <QuestionCircleOutlined style={{marginRight:'16px'}}/>
                     <p style={{marginRight:'16px'}}>
@@ -257,17 +280,19 @@ function App() {
                 </div>
             </div>
             <div style={{padding:'20px'}}>
-                <div style={{display:'flex', justifyContent:'space-around', flexWrap:'wrap'}}>                 
+                <div style={{display:'flex', justifyContent:'space-around', flexWrap:'wrap'}}>
                   {cardInformation.map((cardIn,index)=>{
                     return(<NotesCard index={index} title={cardIn.title} book_movie={cardIn.book_movie} context={cardIn.context} popUpAction={popUpAction} handleRemove={handleRemove}/>)
                   })}
+                                
+                  
                   {/* {filterData.map((cardIn, index) => (
                     return(<NotesCard key={index} index={index} title={cardIn.title} book_movie={cardIn.book_movie} context={cardIn.context} popUpAction={popUpAction} />)
                   ))} */}
                 </div>
             </div>
             {pop && (
-                <div style={{position:'fixed', top:'80px', right:'170px', backgroundColor:'white',  display:'flex', flexDirection:'column', width:'60%', border:'1px solid #AFAFAF', borderRadius:'9px', padding:'30px'}}>
+                <div style={{position:'fixed', top:'60px', right:'170px', backgroundColor:'white',  display:'flex', flexDirection:'column', width:'60%', border:'1px solid #AFAFAF', borderRadius:'9px', padding:'30px'}}>
                     {/* <div > */}
                         <h3 >Book/Movie notes</h3>
                         <hr/>    
@@ -276,8 +301,9 @@ function App() {
                         <input placeholder='title' value={title} type='text' onChange={changeTitle} style={{ marginBottom:'10px', border:'1px solid #E4E4E4', borderRadius:'7px', height:'25px'}}  ></input>
                         <input placeholder='book or movie' value={book_movie} type='text' onChange={changeBook_movie} style={{marginBottom:'10px', border:'1px solid #E4E4E4', borderRadius:'7px', height:'25px'}}></input>
                         <textarea rows='20' value={context} onChange={changeContext} style={{padding:'10px', border:'1px solid #E4E4E4', borderRadius:'5px', marginBottom:'10px'}}></textarea>                       
-                    </div>       
-                    {popUpIndex==-1?           
+                    </div>  
+                         
+                    {popUpIndex ==-1?           
                       <button style={{border:'1px solid black', backgroundColor:'white', height:'30px', marginBottom:'10px', borderRadius:'5px'}}
                               onClick={handleAddnote}>
                           <PlusOutlined style={{marginRight:'10px'}}/>Add Note
@@ -288,7 +314,7 @@ function App() {
                         <PlusOutlined style={{marginRight:'10px'}}/>Update
                       </button>
                     }
-                    <button onClick={addNote} style={{border:'1px solid black', backgroundColor:'red', height:'30px', color:'white', borderRadius:'5px', border:'none'}}>
+                    <button onClick={addNote} style={{backgroundColor:'red', height:'30px', color:'white', borderRadius:'5px', border:'none'}}>
                       Cancel
                       </button>
                 </div>)}
@@ -301,3 +327,8 @@ function App() {
 }
 
 export default App;
+
+
+// local storage
+// search function
+// task page
