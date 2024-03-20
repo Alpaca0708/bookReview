@@ -30,6 +30,7 @@ function App() {
     const newTag = tag
     setTags ([...tags, newTag])
     setTag('')
+    console.log(tags)
     // console.log(cardInformation[0]Object.tags())
     // console.log(cardInformation && cardInformation.map((card,index) =>(<div key={index}>{card.tags && card.tags.map((t,i) =>(<div key={i}>{t}</div>))}</div>)))
   }
@@ -375,7 +376,7 @@ function App() {
                                       style={{marginRight:'10px', marginLeft:'10px'}}/>
                                       <PlusOutlined onClick={addTag} />
                                   </div>
-                                  {tags.map((t,index)=>(<p  key={index}>{t}<CloseCircleOutlined /></p>))}
+                                  {tags && tags.map((t,index)=>(<p  key={index}>{t}<CloseCircleOutlined /></p>))}
                                 </div>
                             </div> 
                           </div>   
