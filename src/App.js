@@ -197,19 +197,20 @@ function App() {
     console.log(cardInformation)
     localStorage.setItem('myData', JSON.stringify(newCard));
   }
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState(null)
   const [filterData, setFilterData] = useState(cardInformation);
 
   const handleInputChange = (e) => { 
     const searchTerm = e.target.value;
     setSearch(searchTerm)
     const filteredItems = cardInformation.filter((info) =>
-    info.context.toLowerCase().includes(searchTerm.toLowerCase())
+    info.context?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    info.book_movie?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    info.title?.toLowerCase().includes(searchTerm.toLowerCase()) 
+    // info.tags?.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    setFilterData(filteredItems);
+    setFilterData(filteredItems)
   }
-  
- 
 
   return (
     <BrowserRouter>     
@@ -291,14 +292,15 @@ function App() {
                               Help Center
                             </p>
                             <div style={{width:'32px', height:'32px', borderRadius:'50%', overflow:'hidden',position: 'relative', marginRight:'16px', marginLeft:'16px'}}>
-                            <img src ={user} alt= "user" style={{
-                                                                        width:'100%',
-                                                                        height:'100%',
-                                                                        objectFit: 'contain',                                                                
-                                                                        position:'absolute',
-                                                                        transform: 'scale(1.3)',                                                
-                                                                        top: '4px',
-                                                                        }}></img>
+                              <img src ={user} alt= "user" style={{
+                                                                    width:'100%',
+                                                                    height:'100%',
+                                                                    objectFit: 'contain',                                                                
+                                                                    position:'absolute',
+                                                                    transform: 'scale(1.3)',                                                
+                                                                    top: '4px',
+                                                                    }}>
+                                                                    </img>
                             </div>
                             <p style={{marginRight:'10px', fontWeight:'bold'}}>
                               Ellie.L
@@ -328,12 +330,19 @@ function App() {
                     <div style={{padding:'20px'}}>
                         <div style={{display:'flex', justifyContent:'space-around', flexWrap:'wrap'}}>
                       
-                          
-                          {cardInformation.map((cardIn,index)=>{
-                            return(                              
-                            <NotesCard index={index} title={cardIn.title} book_movie={cardIn.book_movie} context={cardIn.context} tags={cardIn.tags} popUpAction={popUpAction} handleRemove={handleRemove}/>
-                          )
-                          })}
+                          {search === null?
+                              cardInformation.map((cardIn,index)=>{
+                                return(                              
+                                <NotesCard index={index} title={cardIn.title} book_movie={cardIn.book_movie} context={cardIn.context} tags={cardIn.tags} popUpAction={popUpAction} handleRemove={handleRemove}/>
+                              )
+                              })
+                              :
+                              filterData.map((cardIn,index)=>{
+                                return(                              
+                                <NotesCard index={index} title={cardIn.title} book_movie={cardIn.book_movie} context={cardIn.context} tags={cardIn.tags} popUpAction={popUpAction} handleRemove={handleRemove}/>
+                              )
+                              })
+                          }
                           {/* < Routes>
                               <Route path="tasks" element={<Tasks/>}/>
                           </Routes> */} 
@@ -342,8 +351,7 @@ function App() {
                           ))} */}
                         </div>
                     </div>
-                    {pop && (
-                      
+                    {pop && (                    
                         <div style={{position:'fixed', top:'60px', right:'200px', backgroundColor:'white', width:'60%',display:'flex',border:'1px solid #AFAFAF', borderRadius:'9px', padding:'30px', flexDirection:'column' }}>
                           <h3 >Book/Movie notes</h3>
                           <div style={{display:'flex', justifyContent:'space-around'}}>
@@ -373,10 +381,13 @@ function App() {
                                   <p>Labels</p>
                                   <div style={{display:'flex' }}>
                                       <input onChange={changeTag} value={tag}                                                                     
-                                      style={{marginRight:'10px', marginLeft:'10px'}}/>
+                                             style={{marginRight:'10px', marginLeft:'10px'}}/>
                                       <PlusOutlined onClick={addTag} />
                                   </div>
-                                  {tags && tags.map((t,index)=>(<p  key={index}>{t}<CloseCircleOutlined /></p>))}
+                                  {tags && tags.map((t,index)=>(
+                                  <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start'}}>
+                                    <p key={index}>{t}</p> <CloseCircleOutlined />
+                                    </div>))}
                                 </div>
                             </div> 
                           </div>   
